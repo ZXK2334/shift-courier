@@ -1,0 +1,44 @@
+:root{color-scheme:dark;--ink:#f8f3e4;--mint:#bcfbe6;--gold:#ffbc75;--dim:#8799aa;--border:#aac7da40;background:#0b1020;font-family:system-ui, sans-serif}
+*,*::before,*::after{box-sizing:border-box}
+[hidden]{display:none!important}
+body{margin:0;overflow:hidden}
+#game{isolation:isolate;position:relative;overflow:hidden;width:100%;height:100vh;height:100dvh;min-height:215px}
+canvas,.vignette{position:absolute;inset:0;display:block;width:100%;height:100%;z-index:-2}
+.vignette{z-index:-1;pointer-events:none;background:radial-gradient(ellipse at 58% 50%,transparent 35%,#070c1999 100%)}
+.bar,.footer{position:absolute;display:flex;align-items:center;justify-content:space-between;gap:1rem;left:0;right:0;padding-inline:clamp(16px,4vw,60px);color:#bdc9d5}
+.bar{top:0;height:clamp(56px,12vh,95px);background:linear-gradient(#060b17d4,transparent);z-index:3}
+.brand{display:flex;align-items:center;gap:10px;color:var(--ink);text-decoration:none;font-size:13px;font-weight:900;letter-spacing:.12em;line-height:1}
+.logo{display:grid;place-content:center;width:32px;height:32px;border:1px solid #b4d7cb7d;color:var(--mint)}
+.mission,.footer,.eyebrow,.instructions,.hud,.swap{font:600 11px/1.45 ui-monospace,monospace;letter-spacing:.13em}
+.mission span,.eyebrow span{margin:0 .3em;color:var(--dim)}
+.settings{display:flex;gap:8px}
+button{font:inherit;cursor:pointer;touch-action:manipulation}
+button:focus-visible,a:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+.settings button{width:36px;height:36px;border:1px solid var(--border);background:#0d1725;color:var(--ink)}
+.settings button[aria-pressed=true]{color:var(--mint);border-color:#bcfbe691}
+.settings button:disabled{opacity:.45;cursor:default}
+.footer{bottom:0;height:44px;font-size:9px;pointer-events:none;background:linear-gradient(transparent,#08101adc);white-space:nowrap}
+.footer i,.eyebrow i{display:inline-block;width:6px;height:6px;margin-right:5px;background:var(--mint);box-shadow:0 0 10px #bcfbe6;border-radius:50%}
+.overlay{position:absolute;inset:0;display:flex;align-items:center;padding:clamp(22px,6vw,90px);background:linear-gradient(98deg,#0a1124ee,#0a112499 34%,transparent 73%)}
+.card{max-width:500px;color:var(--ink)}
+.eyebrow{color:var(--mint);margin-bottom:22px;font-size:10px}
+h1{margin:0;line-height:.88;font-size:clamp(42px,8.6vw,124px);font-weight:950;letter-spacing:-.095em;text-shadow:0 1px 30px #090f23aa}
+h1 em{font-style:normal;color:var(--mint)}
+#brief{max-width:32ch;margin:24px 0;line-height:1.55;color:#c3d1de;font-size:clamp(13px,1.6vw,16px)}
+#launch{background:var(--mint);color:#081923;border:0;padding:12px 15px;font-size:14px;font-weight:800;min-width:168px;text-align:left}
+#launch span{float:right;margin-left:18px}
+#launch:hover,.swap:hover{background:#e1fff4}
+.instructions{margin-top:18px;color:#b4c5d4;font-size:10px}
+.instructions b{margin:0 .4em}
+kbd{padding:2px 4px;border:1px solid #c5d9eb75;color:var(--ink)}
+.hud{position:absolute;top:clamp(56px,12vh,95px);left:clamp(16px,4vw,60px);right:clamp(16px,4vw,60px);pointer-events:none;color:#e0f0fb}
+.row{display:flex;justify-content:space-between}
+.right{text-align:right}
+.hud strong{display:block;font-size:17px;color:var(--mint);font-variant-numeric:tabular-nums;letter-spacing:.14em;padding:3px 0}
+.track{height:2px;background:#d6f5ff4f;margin-top:8px}
+.track i{display:block;width:0%;height:100%;background:var(--mint)}
+.swap{position:absolute;right:clamp(16px,4vw,60px);bottom:60px;padding:10px 14px;background:#0e1b2cde;color:var(--mint);border:1px solid #bcfbe688;border-radius:4px;font-size:13px}
+.swap span{margin-right:6px;font-size:17px}
+.swap:hover{color:#0e1b2c}
+@media(max-width:600px){.mission,.footer span:last-child{display:none}.footer{gap:8px}.footer span:first-child{font-size:8px}h1{font-size:clamp(54px,14vw,82px)}.overlay{align-items:center;background:linear-gradient(95deg,#09101de9,#09101d45)}.swap{bottom:49px}}
+@media(max-height:440px){h1{font-size:clamp(35px,11vh,56px)}.eyebrow{margin-bottom:8px}.overlay{padding-top:52px}.instructions{margin-top:9px}#brief{margin:9px 0}#launch{padding:8px 12px}.footer{height:28px}.swap{bottom:32px}.bar{height:51px}.hud{top:51px}}

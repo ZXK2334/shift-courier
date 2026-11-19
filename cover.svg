@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="630" height="500" viewBox="0 0 630 500">
+<defs>
+ <linearGradient id="sky" x2="0" y2="1"><stop stop-color="#151d37"/><stop offset="1" stop-color="#c67c7b"/></linearGradient>
+ <linearGradient id="floor" x2="0" y2="1"><stop stop-color="#26364b"/><stop offset="1" stop-color="#090f20"/></linearGradient>
+ <linearGradient id="sun" x2="0" y2="1"><stop stop-color="#ffe1ae"/><stop offset="1" stop-color="#f7a16d"/></linearGradient>
+ <linearGradient id="thrust" x2="0" y2="1"><stop stop-color="#e0fff5"/><stop offset="1" stop-color="#8cf8d3" stop-opacity="0"/></linearGradient>
+ <clipPath id="disc"><circle cx="459" cy="193" r="72"/></clipPath>
+</defs>
+<path fill="url(#sky)" d="M0 0h630v292H0z"/>
+<g fill="#f9ecdf" opacity=".55"><circle cx="90" cy="46" r="1"/><circle cx="188" cy="77" r="2"/><circle cx="428" cy="61" r="1"/><circle cx="500" cy="42" r=".9"/><circle cx="540" cy="90" r="1"/><circle cx="602" cy="59" r="1.2"/><circle cx="397" cy="86" r="1"/><circle cx="364" cy="47" r="1"/><circle cx="572" cy="145" r="1"/></g>
+<circle cx="459" cy="193" r="72" fill="url(#sun)"/>
+<g clip-path="url(#disc)" fill="#ac6671"><path d="M380 213h155v3H380zm0 16h155v4H380zm0 16h155v7H380zm0 14h155v5H380z"/></g>
+<path fill="#54566e" d="m0 255 63-13 36 5 61-41 28 17 17-12 76 49 44-18 24 15 58-47 31 20 19-5 42 19 33-21 25 5 73-47v111H0z"/>
+<path fill="#354258" d="m0 267 83-38 27 16 26-2 26 16 79-7 50 21 70-25 41 15 28-17 94 15 50-37 56 17v63H0z"/>
+<path fill="url(#floor)" d="M0 275h630v225H0z"/>
+<path fill="#173348" d="M460 274 625 500H138l316-226Z"/>
+<g stroke="#9ed2cc" stroke-opacity=".32" fill="none">
+ <path d="m456 275-206 225m210-225 91 225m-97-225-374 225m382-225 168 127m-193-109h41m-55 12h65m-85 17h102m-132 25h153m-202 36h216m-275 45h316m-417 63h479"/>
+</g>
+<g stroke="#c2ffea" stroke-opacity=".84" fill="none"><path d="m455 275-20 16m-15 13-18 16m-21 18-31 26m-29 26-49 40m-38 33-43 37m269-224 12 19m11 19 13 22m15 30 24 41m20 32 33 61" stroke-width="2"/></g>
+<g transform="translate(478 349) scale(52)" stroke-linejoin="round">
+ <path fill="url(#thrust)" d="M-.27.27h.13l-.02 1.1Zm.40 0h.17l-.08 1.27Z"/>
+ <path fill="#223d54" stroke="#cbd8d7" stroke-width=".035" d="M0-.74-.25-.3-.62-.05-.68.23-.31.39h.62l.37-.16-.06-.28-.37-.25Z"/>
+ <path fill="#afc0ba" d="M0-.69-.25-.3-.62-.05-.65.13-.32.12-.2-.03Z"/>
+ <path fill="#829eaa" d="M0-.69.25-.3.62-.05.65.13.32.12.2-.03Z"/>
+ <path fill="#fff2cc" d="M0-.63.20-.03.1.30h-.2l-.1-.33Z"/>
+ <path fill="#315675" d="M0-.45.10-.16.06-.06h-.12l-.04-.1Z"/>
+ <path fill="#e99a65" d="M-.55.02-.43.01-.35.14-.63.21Zm1.1 0-.12-.01-.08.13.28.07Z"/>
+ <path stroke-width=".055" stroke="#c4ffec" d="M-.13.29h-.15m.41 0h.15"/>
+</g>
+<rect x="0" y="0" width="630" height="500" fill="none" stroke="#8ab5bf" stroke-opacity=".25" stroke-width="26"/>
+<g font-family="DejaVu Sans,sans-serif" font-weight="bold">
+<text x="55" y="91" font-size="13" letter-spacing="4" fill="#baeee2">FLIGHT NO. 01 / GAME OFF</text>
+<text x="50" y="185" font-size="84" letter-spacing="-6" fill="#fff1d6">SHIFT</text>
+<text x="51" y="246" font-size="61" letter-spacing="-4" fill="#c0fae4">COURIER</text>
+<text x="55" y="284" font-size="13" letter-spacing="3" fill="#e1e1dd">THE LAST RELAY</text>
+</g>
+<path d="M55 423h66" stroke="#ace8d7" stroke-width="2"/>
+<text x="55" y="450" font-family="DejaVu Sans Mono,monospace" font-size="11" letter-spacing="2" fill="#c9d8e0">SWITCH LANES. DELIVER.</text>
+</svg>

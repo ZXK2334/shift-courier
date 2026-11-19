@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#101725">
+<title>Shift Courier</title>
+<link rel="stylesheet" href="style.css">
+<script defer src="flight.js"></script>
+<script defer src="game.js"></script>
+</head>
+<body>
+<main id="game" aria-label="Shift Courier">
+ <canvas id="scene" aria-hidden="true"></canvas>
+ <div class="vignette" aria-hidden="true"></div>
+ <header class="bar">
+    <a href="./" class="brand" aria-label="Shift Courier home"><span class="logo" aria-hidden="true">◆</span><span>SHIFT<br>COURIER</span></a>
+    <p class="mission">FREIGHT DIVISION <b>01</b> <span>/</span> LUMEN REACH</p>
+    <div class="settings"><button id="pause" type="button" disabled aria-keyshortcuts="P Escape" aria-label="Pause" title="Pause (P)">Ⅱ</button><button id="sound" type="button" aria-label="Sound" aria-pressed="false" title="Toggle sound">♪</button></div>
+ </header>
+ <section class="hud" aria-label="Flight instruments" hidden>
+   <div class="row"><div><span>HULL</span><strong id="hull" aria-label="3 hull remaining">◆ ◆ ◆</strong></div><div class="right"><span id="sector">01 / OUTER RELAY</span><strong id="distance">0%</strong></div></div>
+   <div class="track" id="progress" role="progressbar" aria-label="Flight progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><i></i></div>
+ </section>
+ <section id="overlay" aria-labelledby="title" class="overlay">
+   <div class="card">
+      <div id="eyebrow" class="eyebrow"><i></i> GAME OFF 2026 <span>//</span> FLIGHT NO. 01</div>
+      <h1 id="title">Shift<br><em>Courier</em></h1>
+      <p id="brief">A storm is closing over the last relay. Take the low route, keep your cargo intact, and shift lanes before the barriers hit.</p>
+      <button id="launch" type="button">Launch flight <span>↗</span></button>
+      <p id="instructions" class="instructions"><kbd>SHIFT</kbd> Switch lanes <b>·</b> <kbd>P</kbd> Pause</p>
+   </div>
+ </section>
+ <footer class="footer"><span><i></i> SIGNAL LOCKED</span><span id="lane-label" aria-live="off">LUMEN REACH / FLIGHT 01</span><span>GAME OFF 2026</span></footer>
+ <button id="swap" class="swap" type="button" aria-label="Shift lanes" hidden><span>⇆</span> SHIFT</button>
+</main>
+</body>
+</html>
