@@ -27,12 +27,13 @@
       <div id="eyebrow" class="eyebrow"><i></i> GAME OFF 2026 <span>//</span> FLIGHT NO. 01</div>
       <h1 id="title">Shift<br><em>Courier</em></h1>
       <p id="brief">A storm is closing over the last relay. Take the low route, keep your cargo intact, and shift lanes before the barriers hit.</p>
-      <button id="launch" type="button">Launch flight <span>↗</span></button>
+      <button id="launch" type="button" data-glyph="launch"><span id="launch-label">Launch flight</span><span class="control-icon" aria-hidden="true">↗</span></button>
       <p id="instructions" class="instructions"><kbd>SHIFT</kbd> Switch lanes <b>·</b> <kbd>P</kbd> Pause</p>
    </div>
  </section>
  <footer class="footer"><span><i></i> SIGNAL LOCKED</span><span id="lane-label" aria-live="off">LUMEN REACH / FLIGHT 01</span><span>GAME OFF 2026</span></footer>
- <button id="swap" class="swap" type="button" aria-label="Shift lanes" hidden><span>⇆</span> SHIFT</button>
+ <button id="swap" class="swap" type="button" aria-label="Shift lanes" data-glyph="shift" hidden><span class="control-icon" aria-hidden="true">⇆</span><img id="shift-gif" class="control-gif" alt="" aria-hidden="true"> SHIFT</button>
+ <div class="takeoff-fx" id="takeoff-fx" aria-hidden="true"><img id="takeoff-gif" alt=""></div>
 </main>
 </body>
 </html>

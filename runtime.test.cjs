@@ -1,23 +1,26 @@
 const test=require('node:test'),assert=require('node:assert/strict'),{readFileSync}=require('node:fs'),vm=require('node:vm');
-function page(){
- const handlers={}, attrs={}, frames=[], nodes={}; let calls=0;
+function page(reduce=false){
+ const handlers={}, attrs={}, frames=[], timers=[], nodes={}; let calls=0;
  const grad={addColorStop(){}};
  const ctx=new Proxy({createLinearGradient:()=>grad, createRadialGradient:()=>grad},{get(t,k){return k in t?t[k]:(...a)=>{assert(a.every(x=>typeof x!=='number'||Number.isFinite(x)),String(k));calls++}}});
  function node(id){return nodes[id]??= {listen:{},textContent:'',innerHTML:'',hidden:false,clientWidth:1280, clientHeight:720,firstElementChild:{style:{}},style:{},setAttribute(k,v){attrs[id+k]=v},addEventListener(k,v){this.listen[k]=v},click(){this.listen.click?.()},focus(){},getContext(){return ctx}};}
  const document={hidden:false,getElementById:node,querySelector:node,addEventListener(k,v){handlers[k]=v}};
- const sandbox={document,devicePixelRatio:1,addEventListener(){},requestAnimationFrame(f){frames.push(f)},setTimeout(){}};
+ const sandbox={document,devicePixelRatio:1,matchMedia:()=>({matches:reduce}),addEventListener(){},requestAnimationFrame(f){frames.push(f)},setTimeout(fn){timers.push(fn)}};
  sandbox.window=sandbox;
  vm.createContext(sandbox);
  for(const file of ['flight.js','game.js'])vm.runInContext(readFileSync(file,'utf8'),sandbox,{filename:file});
  let t=0;
- return {node,keyboard(code,repeat=false){handlers.keydown({code,repeat,preventDefault(){}})},tick(ms=16.67){t+=ms;frames.shift()(t)},attrs,get calls(){return calls},visibility(hidden){document.hidden=hidden;handlers.visibilitychange()}};
+ return {node,timers,keyboard(code,repeat=false){handlers.keydown({code,repeat,preventDefault(){}})},tick(ms=16.67){t+=ms;frames.shift()(t)},attrs,get calls(){return calls},visibility(hidden){document.hidden=hidden;handlers.visibilitychange()}};
 }
 test('production scripts cover start, keyboard/touch action, repeated key suppression, pause/resume, and drawing',()=>{
  const p=page();p.tick();assert.ok(p.calls>100);
- assert.equal(p.node('overlay').hidden,false);p.node('launch').click();assert.equal(p.node('overlay').hidden,true);
- p.keyboard('ShiftLeft');assert.match(p.node('lane-label').textContent,/02/);
- p.keyboard('ShiftLeft',true);assert.match(p.node('lane-label').textContent,/02/);
- p.node('swap').click();assert.match(p.node('lane-label').textContent,/01/);
+ assert.equal(p.node('overlay').hidden,false);p.node('launch').click();assert.equal(p.node('overlay').hidden,true);assert.equal(p.attrs['takeoff-fxdata-active'],'launch');assert.match(p.node('takeoff-gif').src,/launch\.gif/);
+ p.keyboard('ShiftLeft');assert.match(p.node('lane-label').textContent,/02/);assert.equal(p.attrs['swapdata-active'],'shift');assert.match(p.node('shift-gif').src,/shift\.gif/);const effect=p.node('shift-gif').src;
+ p.keyboard('ShiftLeft',true);assert.match(p.node('lane-label').textContent,/02/);assert.equal(p.node('shift-gif').src,effect);
+ p.node('swap').click();assert.match(p.node('lane-label').textContent,/01/);assert.notEqual(p.node('shift-gif').src,effect);
+ p.node('shift-gif').onload();assert.equal(p.attrs['swapdata-loaded'],'true');
+ p.timers[1]();assert.equal(p.attrs['swapdata-active'],'shift');
+ p.timers[2]();assert.equal(p.attrs['swapdata-active'],'');
  p.keyboard('KeyP');assert.match(p.node('title').innerHTML,/Paused/);p.node('launch').click();
  assert.equal(p.node('overlay').hidden,true);
  p.visibility(true);assert.match(p.node('title').innerHTML,/Paused/);p.visibility(false);
@@ -26,7 +29,7 @@ test('production scripts reach crash and retry screens with correct hull',()=>{
  const p=page();p.tick();p.node('launch').click();for(let i=0;i<165;i++)p.tick(100);
  assert.match(p.node('title').innerHTML,/Lost/);
  assert.equal(p.attrs['hullaria-label'],'0 hull remaining');
- p.node('launch').click();assert.equal(p.attrs['hullaria-label'],'3 hull remaining');assert.equal(p.node('overlay').hidden,true);
+ p.node('launch').click();assert.match(p.node('takeoff-gif').src,/retry\.gif/);assert.equal(p.attrs['hullaria-label'],'3 hull remaining');assert.equal(p.node('overlay').hidden,true);
 });
 test('one complete winning run through production UI with all barriers dodged',()=>{
  const {ROUTE}=require('./flight.js'),p=page();p.tick();p.node('launch').click();let target=0,lane=0;
@@ -35,4 +38,12 @@ test('one complete winning run through production UI with all barriers dodged',(
    p.tick(100)
  }assert.match(p.node('title').innerHTML,/Complete/);assert.match(p.node('brief').textContent,/28 of 28/);
  assert.equal(p.attrs['progressaria-valuenow'],100);
+});
+
+test('reduced motion leaves launch and shift controls functional but does not request GIFs',()=>{
+ const p=page(true);p.tick();p.node('launch').click();p.node('swap').click();
+ assert.equal(p.node('overlay').hidden,true);
+ assert.match(p.node('lane-label').textContent,/02/);
+ assert.equal(p.node('takeoff-gif').src,undefined);
+ assert.equal(p.node('shift-gif').src,undefined);
 });

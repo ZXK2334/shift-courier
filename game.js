@@ -127,6 +127,28 @@
  }
  const overlay=$('overlay'), launch=$('launch'), title=$('title'), hud=document.querySelector('.hud'), swap=$('swap');
  const sectorNames=['01 / OUTER RELAY','02 / SHADOW FIELD','03 / INNER BELT','04 / FINAL APPROACH'];
+ // Use real image frames on each action. A distinct request restarts the one-shot GIF.
+ for(const glyph of ['launch','retry','shift']){
+   if(typeof Image!=='function')break;
+   const testIcon=new Image();
+   testIcon.onload=()=>root.setAttribute('data-icon-'+glyph,'ready');
+   testIcon.src='assets/'+glyph+'.png';
+ }
+ const fxSerial=new WeakMap();
+ const reduceFX=()=>window.matchMedia?.('(prefers-reduced-motion: reduce)').matches??false;
+ function playFX(holder,img,kind){
+   if(reduceFX())return;
+   const serial=(fxSerial.get(holder)||0)+1;
+   fxSerial.set(holder,serial);
+   holder.setAttribute('data-active',kind);
+   holder.setAttribute('data-loaded','false');
+   const finish=()=>{if(fxSerial.get(holder)===serial)holder.setAttribute('data-active','');};
+   img.onload=()=>{if(fxSerial.get(holder)===serial)holder.setAttribute('data-loaded','true');};
+   img.onerror=finish;
+   img.src='assets/'+kind+'.gif?play='+serial;
+   setTimeout(finish,470);
+ }
+
  function updateUI(){
   overlay.hidden=g.state==='live';
   hud.hidden=g.state==='ready';
@@ -150,16 +172,19 @@
   title.innerHTML=name[0]+'<br><em>'+name[1]+'</em>';
   $('eyebrow').textContent=paused?'// AUTOPILOT HOLD':win?'// RECEIPT CONFIRMED':'// CARGO LINK OFFLINE';
   $('brief').textContent=paused?'Route frozen. Resume when ready.':win?'Cargo received. You cleared '+g.dodged+' of '+ROUTE.length+' barriers with '+g.shields+' hull remaining.':'You cleared '+g.dodged+' barriers. Watch the orange gate ahead and shift into the open lane.';
-  launch.innerHTML=(paused?'Resume flight':'Fly again')+' <span>↗</span>';
+  $('launch-label').textContent=paused?'Resume flight':'Fly again';
+  launch.setAttribute('data-glyph',paused?'launch':'retry');
   launch.focus({preventScroll:true});
   if(!paused)endTones(win);
  }
  function begin(){
   if(g.state==='paused'){g.pause();tone(350);updateUI();return;}
   if(g.state==='live')return;
+  const glyph=g.state==='ready'?'launch':'retry';
   g.start();tone(300,.28,'triangle',.08,260);updateUI();
+  playFX($('takeoff-fx'),$('takeoff-gif'),glyph);
  }
- function shift(){if(g.shift()){tone(g.lane?545:430,.12,'triangle',.085,190);updateUI()}}
+ function shift(){if(g.shift()){tone(g.lane?545:430,.12,'triangle',.085,190);updateUI();playFX(swap,$('shift-gif'),'shift')}}
  function pause(){if(g.pause())updateUI()}
  launch.addEventListener('click',begin);swap.addEventListener('click',shift);
  $('pause').addEventListener('click',pause);

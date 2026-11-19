@@ -22,3 +22,9 @@ The flight-game direction and Shift lane-swap mechanic were approved by the entr
 ## itch.io packaging
 
 Upload the HTML5 ZIP as **HTML** and mark it as playable in the browser. Its root contains `index.html`, `style.css`, `flight.js`, and `game.js`. Publish a public GitHub source repository and link it to the itch.io page before entering the separate Game Off submission. Do not claim the jam entry is submitted until the jam entry appears.
+
+## Animated control feedback
+
+Launch and retry play small non-interactive one-shot GIFs near the flight HUD; the Shift key and on-screen Shift control play the lane-change GIF by the control. Controls keep their text labels and fall back to static icons and then symbols if an image is unavailable. Reduced-motion preferences suppress the button GIFs without changing gameplay.
+
+The three icon silhouettes were created with OpenAI's built-in image generation. The developer extracted the silhouettes, animated them as frames, and assembled the GIF files. They are not native GPT Image 2.6 GIF outputs.
